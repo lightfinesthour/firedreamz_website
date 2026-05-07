@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Firedreamz · Hand-crafted visual novels & the engine behind them</title>
+<meta name="description" content="Firedreamz makes hand-crafted visual novels and the data-driven Godot engine that powers them. Demon At The Door is in active development." />
+
+<meta name="theme-color" content="#fbf3e7" />
+
+<meta property="og:title" content="Firedreamz" />
+<meta property="og:description" content="Hand-crafted visual novels and the engine behind them." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://firedreamz.com/" />
+<meta property="og:image" content="https://firedreamz.com/images/demon_at_the_door_logo.png" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="icon" type="image/png" href="images/demon_at_the_door_logo.png" />
+
+<style>
+  :root {
+    --cream: #fbf3e7;
+    --cream-deep: #f3e6d1;
+    --cream-darker: #ead6b8;
+    --peach: #f5b89d;
+    --coral: #ec8a6e;
+    --rose: #e9a8b4;
+    --sage: #8aa48a;
+    --sage-deep: #6e8a72;
+    --wood: #a06a3f;
+    --wood-deep: #6d4527;
+    --gold: #ffd98a;
+    --ink: #3c3a4a;
+    --ink-soft: #5a5668;
+    --ink-faint: #8a8597;
+    --pink: #ff3aa1;
+    --pink-deep: #d92a85;
+    --cyan: #3df0ff;
+    --shadow-soft: 0 6px 24px rgba(60, 58, 74, 0.10);
+    --shadow-medium: 0 12px 36px rgba(60, 58, 74, 0.15);
+    --shadow-card: 0 4px 14px rgba(109, 69, 39, 0.10);
+    --radius: 14px;
+    --radius-lg: 22px;
+    --max-w: 1180px;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: var(--font);
+    color: var(--ink);
+    background: var(--cream);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.4  0 0 0 0 0.35  0 0 0 0 0.25  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    opacity: 0.5;
+    mix-blend-mode: multiply;
+  }
+
+  a { color: var(--wood-deep); text-decoration: none; transition: color 0.2s ease; }
+  a:hover { color: var(--pink-deep); }
+
+  img { max-width: 100%; height: auto; display: block; }
+
+  h1, h2, h3, h4 {
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 0.4em;
+    letter-spacing: -0.01em;
+  }
+
+  h1 { font-size: clamp(2.4rem, 5.5vw, 3.8rem); }
+  h2 { font-size: clamp(1.8rem, 3.6vw, 2.6rem); }
+  h3 { font-size: 1.2rem; }
+
+  p { margin: 0 0 1em; }
+
+  /* ---------- Top nav ---------- */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(251, 243, 231, 0.85);
+    backdrop-filter: saturate(160%) blur(10px);
+    -webkit-backdrop-filter: saturate(160%) blur(10px);
+    border-bottom: 1px solid rgba(160, 106, 63, 0.12);
+  }
+  .nav-inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .brand {
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    display: inline-flex;
+    align-items: baseline;
+    gap: 2px;
+  }
+  .brand .fire { color: var(--coral); }
+  .brand .dreamz { color: var(--pink-deep); }
+  .nav-links { display: flex; gap: 22px; flex-wrap: wrap; }
+  .nav-links a {
+    color: var(--ink-soft);
+    font-weight: 500;
+    font-size: 0.97rem;
+    padding: 4px 2px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .nav-links a:hover { color: var(--pink-deep); border-bottom-color: var(--pink); }
+  @media (max-width: 600px) {
+    .nav-links { gap: 14px; }
+    .nav-links a { font-size: 0.88rem; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    padding: 92px 24px 80px;
+    text-align: center;
+    background:
+      radial-gradient(900px 400px at 50% 0%, rgba(245, 184, 157, 0.35), transparent 70%),
+      radial-gradient(700px 350px at 80% 60%, rgba(233, 168, 180, 0.30), transparent 70%),
+      var(--cream);
+  }
+  .hero-inner { max-width: 860px; margin: 0 auto; position: relative; z-index: 2; }
+  .hero h1 {
+    margin-bottom: 0.3em;
+  }
+  .hero h1 .accent { color: var(--pink-deep); }
+  .hero .tagline {
+    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+    color: var(--ink-soft);
+    max-width: 620px;
+    margin: 0 auto 28px;
+  }
+  .hero-cta {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+  }
+  .btn {
+    display: inline-block;
+    padding: 12px 22px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.97rem;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s, color 0.2s;
+    text-decoration: none;
+  }
+  .btn-primary {
+    background: var(--pink);
+    color: #fff;
+    box-shadow: 0 8px 22px rgba(255, 58, 161, 0.32);
+  }
+  .btn-primary:hover { background: var(--pink-deep); transform: translateY(-2px); color: #fff; }
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--wood);
+  }
+  .btn-ghost:hover { background: var(--wood); color: var(--cream); transform: translateY(-2px); }
+
+  /* ---------- Section shell ---------- */
+  section { position: relative; z-index: 2; }
+  .section {
+    padding: 88px 24px;
+  }
+  .section-inner { max-width: var(--max-w); margin: 0 auto; }
+  .section-alt { background: var(--cream-deep); }
+  .section-eyebrow {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 10px;
+  }
+  .section-header {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 56px;
+  }
+  .section-header p { color: var(--ink-soft); font-size: 1.08rem; }
+
+  /* ---------- Game section ---------- */
+  .game-banner {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: linear-gradient(180deg, #1b0f24 0%, #311934 100%);
+    box-shadow: var(--shadow-medium);
+    margin-bottom: 56px;
+  }
+  .game-banner img {
+    width: 100%;
+    display: block;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+  .rating-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--ink);
+    color: var(--cream);
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    padding: 5px 11px;
+    border-radius: 6px;
+    margin-left: 10px;
+    vertical-align: middle;
+  }
+  .rating-badge .dot {
+    width: 7px;
+    height: 7px;
+    background: var(--pink);
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(255, 58, 161, 0.7);
+  }
+  .game-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 56px;
+    align-items: start;
+  }
+  @media (max-width: 880px) {
+    .game-grid { grid-template-columns: 1fr; gap: 36px; }
+  }
+  .game-synopsis p { font-size: 1.05rem; }
+  .game-synopsis p:first-of-type::first-letter {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: var(--pink-deep);
+    float: left;
+    line-height: 0.9;
+    margin: 6px 8px 0 0;
+  }
+  .feature-list { list-style: none; padding: 0; margin: 0 0 24px; }
+  .feature-list li {
+    position: relative;
+    padding: 10px 0 10px 30px;
+    border-bottom: 1px dashed rgba(160, 106, 63, 0.25);
+    color: var(--ink);
+  }
+  .feature-list li:last-child { border-bottom: none; }
+  .feature-list li::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 18px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--coral);
+    box-shadow: 0 0 0 4px rgba(236, 138, 110, 0.18);
+  }
+
+  /* ---------- Screenshot gallery ---------- */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 56px;
+  }
+  @media (max-width: 880px) { .gallery { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .gallery { grid-template-columns: 1fr; } }
+  .shot {
+    position: relative;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--cream-darker);
+    cursor: zoom-in;
+    box-shadow: var(--shadow-card);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border: none;
+    padding: 0;
+    width: 100%;
+  }
+  .shot:hover { transform: translateY(-4px); box-shadow: var(--shadow-medium); }
+  .shot img {
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    width: 100%;
+    transition: transform 0.4s ease;
+  }
+  .shot:hover img { transform: scale(1.04); }
+  .shot-caption {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 28px 14px 12px;
+    background: linear-gradient(transparent, rgba(60, 58, 74, 0.65));
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: left;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .shot:hover .shot-caption { opacity: 1; }
+
+  /* ---------- Lightbox ---------- */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 14, 26, 0.92);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 24px;
+    cursor: zoom-out;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.4rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+  .lightbox-close:hover { background: rgba(255,255,255,0.2); }
+
+  /* ---------- Engine section ---------- */
+  .engine-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 22px;
+    margin-top: 32px;
+  }
+  .engine-card {
+    background: var(--cream);
+    border-radius: var(--radius);
+    padding: 26px 24px;
+    box-shadow: var(--shadow-card);
+    border: 1px solid rgba(160, 106, 63, 0.12);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .engine-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-medium); }
+  .engine-card h3 {
+    color: var(--wood-deep);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .engine-card .icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: var(--peach);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--wood-deep);
+    flex-shrink: 0;
+  }
+  .engine-card p { color: var(--ink-soft); font-size: 0.97rem; margin: 0; }
+
+  .engine-tag {
+    display: inline-block;
+    background: rgba(138, 164, 138, 0.18);
+    color: var(--sage-deep);
+    font-weight: 600;
+    font-size: 0.82rem;
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-right: 6px;
+    margin-bottom: 6px;
+  }
+
+  /* ---------- Platforms ---------- */
+  .platform-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+    max-width: 920px;
+    margin: 0 auto;
+  }
+  @media (max-width: 700px) { .platform-grid { grid-template-columns: 1fr; } }
+  .platform-block h3 {
+    color: var(--wood-deep);
+    margin-bottom: 14px;
+  }
+  .platform-block.upcoming h3 { color: var(--ink-faint); }
+  .platform-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .platform-pill {
+    background: var(--cream);
+    border: 1px solid rgba(160, 106, 63, 0.18);
+    border-radius: 999px;
+    padding: 10px 18px;
+    font-weight: 600;
+    color: var(--ink);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: var(--shadow-card);
+  }
+  .platform-block.upcoming .platform-pill {
+    background: transparent;
+    color: var(--ink-faint);
+    border-style: dashed;
+    box-shadow: none;
+  }
+  .platform-pill svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+  .ea-callout {
+    margin-top: 56px;
+    padding: 32px 28px;
+    background: linear-gradient(135deg, rgba(255, 58, 161, 0.10), rgba(255, 217, 138, 0.18));
+    border: 1px solid rgba(255, 58, 161, 0.25);
+    border-radius: var(--radius-lg);
+    text-align: center;
+  }
+  .ea-callout h3 {
+    color: var(--pink-deep);
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+  }
+  .ea-callout p { color: var(--ink-soft); margin-bottom: 18px; }
+  .ea-channels {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+  }
+  .ea-channel {
+    background: var(--cream);
+    border-radius: 999px;
+    padding: 10px 20px;
+    font-weight: 600;
+    color: var(--ink);
+    border: 1px solid rgba(60, 58, 74, 0.10);
+  }
+  .ea-channel small {
+    color: var(--ink-faint);
+    font-weight: 500;
+    margin-left: 6px;
+  }
+
+  /* ---------- About ---------- */
+  .about-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .about-inner p { font-size: 1.08rem; color: var(--ink-soft); }
+
+  /* ---------- Footer ---------- */
+  footer {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 48px 24px 32px;
+    position: relative;
+    z-index: 2;
+  }
+  footer .footer-inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: space-between;
+    align-items: center;
+  }
+  footer .brand { color: var(--cream); font-size: 1.4rem; }
+  footer .brand .fire { color: var(--coral); }
+  footer .brand .dreamz { color: var(--pink); }
+  footer a { color: var(--cream); border-bottom: 1px solid rgba(251, 243, 231, 0.4); }
+  footer a:hover { color: var(--pink); border-bottom-color: var(--pink); }
+  .footer-meta { font-size: 0.88rem; color: rgba(251, 243, 231, 0.6); }
+  .footer-contact { font-weight: 600; }
+
+  /* ---------- Reduced motion ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Main">
+  <div class="nav-inner">
+    <a href="#top" class="brand"><span class="fire">Fire</span><span class="dreamz">dreamz</span></a>
+    <div class="nav-links">
+      <a href="#game">Game</a>
+      <a href="#engine">Engine</a>
+      <a href="#platforms">Platforms</a>
+      <a href="#about">About</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-inner">
+    <h1>Hand-crafted visual novels<br/><span class="accent">and the engine behind them.</span></h1>
+    <p class="tagline">Firedreamz is an independent studio building story-driven adventures and the data-driven Godot engine that powers them.</p>
+    <div class="hero-cta">
+      <a href="#game" class="btn btn-primary">Meet our first game</a>
+      <a href="#engine" class="btn btn-ghost">About the engine</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ GAME ============ -->
+<section class="section" id="game">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-eyebrow">Now in development</span>
+      <h2>Demon At The Door <span class="rating-badge"><span class="dot"></span>18+</span></h2>
+      <p>An erotic point-and-click adventure where coming home is the strangest thing of all.</p>
+    </div>
+
+    <div class="game-banner">
+      <img src="images/demon_at_the_door_logo.png" alt="Demon At The Door: neon pink pentagram logo over a moonlit cityscape with two robed figures flanking gothic archways" />
+    </div>
+
+    <div class="game-grid">
+      <div class="game-synopsis">
+        <p>After six years away at boarding school, the hero (or antihero, depending on the choices you make) returns to the only home he's ever really known. Waiting for him are the people he left behind, warm, watchful, and not at all the way he remembers them.</p>
+        <p>What seems like a quiet homecoming quickly reveals itself to be anything but. Demon At The Door is a hand-illustrated point-and-click visual novel about memory, desire, and the things we leave behind when we walk out the door, and the things still waiting when we come back through it.</p>
+        <p>Every room is a place to explore. Every conversation is a fork in the road. Days pass, energy ebbs, and the choices you make echo into the rooms above and the rooms still locked.</p>
+      </div>
+
+      <div>
+        <h3 style="color: var(--wood-deep); margin-bottom: 16px;">What's inside</h3>
+        <ul class="feature-list">
+          <li>Fully hand-illustrated cartoon scenes and characters</li>
+          <li>Branching dialogue with character portraits and voiced reactions</li>
+          <li>A living schedule: day, time, and energy systems shape who you can find and where</li>
+          <li>Multi-room point-and-click navigation across an entire household</li>
+          <li>A built-in quest tracker that follows your choices, not a single linear script</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="gallery" id="gallery">
+      <button class="shot" data-src="images/00_mansion.png" data-caption="Coming home. Six years on, the front step still feels like a question.">
+        <img src="images/00_mansion.png" alt="The protagonist standing in front of a sunlit cartoon mansion with a dialogue box reading 'It took me 6 years to get back here, so much has changed.'" loading="lazy" />
+        <span class="shot-caption">Front of the mansion</span>
+      </button>
+      <button class="shot" data-src="images/01_pool.png" data-caption="Cindy at the pool. The garden is bigger than you remember, and so is she.">
+        <img src="images/01_pool.png" alt="A poolside garden scene where Cindy in a red bikini greets the protagonist with the line 'Woah you startled me..'" loading="lazy" />
+        <span class="shot-caption">Garden &amp; pool</span>
+      </button>
+      <button class="shot" data-src="images/02_kitchen.png" data-caption="Mona is still baking. She always was.">
+        <img src="images/02_kitchen.png" alt="Mona in a sage green apron stands in a warm sunlit kitchen, saying 'Surprise! Still baking. You look thin, eat.'" loading="lazy" />
+        <span class="shot-caption">The kitchen</span>
+      </button>
+      <button class="shot" data-src="images/03_hallway.png" data-caption="Upstairs hallway. Pink doors, closed doors, and the ones you used to know.">
+        <img src="images/03_hallway.png" alt="An upstairs hallway with a bright pink door labelled 'Hellrankers' alongside other doors leading to bedrooms, the kitchen, the attic, and the bathroom" loading="lazy" />
+        <span class="shot-caption">Upstairs hallway</span>
+      </button>
+      <button class="shot" data-src="images/04_shower.png" data-caption="'Hmm... I wonder who left the water running.'">
+        <img src="images/04_shower.png" alt="The protagonist enters a tiled bathroom where a shower is running with no one visible inside, golden window light spilling across the floor" loading="lazy" />
+        <span class="shot-caption">The bathroom</span>
+      </button>
+      <button class="shot" data-src="images/05_livingroom.png" data-caption="Evening in the living room. Lamps on, curtains drawn, the house quiet around you.">
+        <img src="images/05_livingroom.png" alt="A dimly lit living room at evening with two sofas, a pink ottoman, lit lamps, a dark horse painting on the wall, and a TV between bookshelves" loading="lazy" />
+        <span class="shot-caption">The living room</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ENGINE ============ -->
+<section class="section section-alt" id="engine">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-eyebrow">Releasing separately</span>
+      <h2>The Firedreamz VN Engine</h2>
+      <p>The data-driven visual novel system that powers Demon At The Door. Built on Godot 4.6, designed for writers and artists, not just programmers.</p>
+    </div>
+
+    <div style="text-align: center; margin-bottom: 36px;">
+      <span class="engine-tag">Godot 4.6</span>
+      <span class="engine-tag">JSON-defined scenes</span>
+      <span class="engine-tag">FFmpeg video</span>
+      <span class="engine-tag">Encrypted release pipeline</span>
+      <span class="engine-tag">Cross-platform export</span>
+    </div>
+
+    <div class="engine-grid">
+      <article class="engine-card">
+        <h3><span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 4v16"/></svg>
+        </span>Author in JSON, not in code</h3>
+        <p>Scenes, dialogue, branches, and entire cutscenes are defined in plain JSON. Writers and designers iterate without touching the codebase, and version control treats every change like a normal text diff.</p>
+      </article>
+
+      <article class="engine-card">
+        <h3><span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+        </span>Cinematic scene directives</h3>
+        <p>Precise positioning, transitions, slide and fade animations, camera shake, lightning flashes, and picture-in-picture overlays. All expressed declaratively, frame-perfect, and easy to tweak.</p>
+      </article>
+
+      <article class="engine-card">
+        <h3><span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+        </span>Real video, including transparency</h3>
+        <p>Integrated FFmpeg video playback supports MP4 and WebM out of the box, with alpha-channel video for ghostly overlays, animated character bursts, and full-screen cinematics.</p>
+      </article>
+
+      <article class="engine-card">
+        <h3><span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+        </span>Production-ready release pipeline</h3>
+        <p>Ship with confidence: AES-256 asset encryption, SHA-256 filename obfuscation, and a one-command export pipeline keep your art and writing protected from casual extraction.</p>
+      </article>
+
+      <article class="engine-card">
+        <h3><span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="12" rx="1.5"/><path d="M3 19h18M9 12h6"/></svg>
+        </span>Cross-platform from day one</h3>
+        <p>One project file, one set of content, and exports to Windows, Linux, and Steam Deck via Godot's mature export pipeline. Mobile and macOS targets follow the same path.</p>
+      </article>
+
+      <article class="engine-card">
+        <h3><span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+        </span>Built for the long game</h3>
+        <p>Quest systems, time and energy, multi-room exploration, save state: everything we needed to build a real visual novel is being lifted out of the game and made reusable.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PLATFORMS ============ -->
+<section class="section" id="platforms">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-eyebrow">Where to play</span>
+      <h2>Coming to your screen of choice</h2>
+      <p>Demon At The Door launches on desktop and Steam Deck first, with mobile and Apple platforms following.</p>
+    </div>
+
+    <div class="platform-grid">
+      <div class="platform-block">
+        <h3>At launch</h3>
+        <ul class="platform-list">
+          <li class="platform-pill">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.5 10.5 4v8H3zM11.5 4 21 2.5V12h-9.5zM3 13h7.5v8L3 19.5zM11.5 13H21v9.5L11.5 21z"/></svg>
+            Windows
+          </li>
+          <li class="platform-pill">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c-1.7 0-2.8 1.6-2.8 3.4 0 .8.2 1.5.5 2-.4.4-.8.9-1.2 1.6-.8 1.5-1.5 3-1.5 5 0 .9.1 1.7.4 2.5-.5.6-.9 1.4-.9 2.3 0 1.1.5 2.1 1.4 2.7.6.4 1.4.5 2.2.5h4c.8 0 1.6-.1 2.2-.5.9-.6 1.4-1.6 1.4-2.7 0-.9-.4-1.7-.9-2.3.3-.8.4-1.6.4-2.5 0-2-.7-3.5-1.5-5-.4-.7-.8-1.2-1.2-1.6.3-.5.5-1.2.5-2C14.8 3.6 13.7 2 12 2zm-1 5.2c.5 0 .8.4.8 1s-.4 1-.8 1-.9-.4-.9-1 .4-1 .9-1zm2 0c.5 0 .8.4.8 1s-.4 1-.8 1-.9-.4-.9-1 .4-1 .9-1z"/></svg>
+            Linux
+          </li>
+          <li class="platform-pill">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5h18a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm5 4a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm8 0a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM6 19h12v1H6z"/></svg>
+            Steam Deck
+          </li>
+        </ul>
+      </div>
+
+      <div class="platform-block upcoming">
+        <h3>Coming after launch</h3>
+        <ul class="platform-list">
+          <li class="platform-pill">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.5c0-2.4 2-3.5 2.1-3.6-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.2.9-4 2.4-1.7 3-.4 7.4 1.3 9.8.8 1.2 1.7 2.5 3 2.4 1.2 0 1.6-.8 3-.8s1.8.8 3.1.7c1.3 0 2.1-1.2 2.9-2.4.9-1.4 1.3-2.7 1.3-2.8-.1-.1-2.5-1-2.5-3.9zm-2.4-7.1c.6-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1 0 2.2-.6 2.8-1.4z"/></svg>
+            macOS
+          </li>
+          <li class="platform-pill">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.5c0-2.4 2-3.5 2.1-3.6-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.2.9-4 2.4-1.7 3-.4 7.4 1.3 9.8.8 1.2 1.7 2.5 3 2.4 1.2 0 1.6-.8 3-.8s1.8.8 3.1.7c1.3 0 2.1-1.2 2.9-2.4.9-1.4 1.3-2.7 1.3-2.8-.1-.1-2.5-1-2.5-3.9z"/></svg>
+            iPhone &amp; iPad
+          </li>
+          <li class="platform-pill">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 9c0-3.9 3.1-7 7-7s7 3.1 7 7v6H5V9zm-1 7h16v3a1 1 0 0 1-1 1h-2v3h-2v-3h-6v3H7v-3H5a1 1 0 0 1-1-1v-3zm5-4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm6 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/></svg>
+            Android
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ea-callout">
+      <h3>Early Access is on the way</h3>
+      <p>An Early Access build of Demon At The Door is coming to itch.io and Patreon. Channels and dates will be announced through the studio's contact email below, so keep in touch.</p>
+      <div class="ea-channels">
+        <span class="ea-channel">itch.io <small>announcing soon</small></span>
+        <span class="ea-channel">Patreon <small>announcing soon</small></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="section section-alt" id="about">
+  <div class="section-inner about-inner">
+    <span class="section-eyebrow">About the studio</span>
+    <h2>Firedreamz</h2>
+    <p>Firedreamz is a small, independent studio focused on hand-crafted visual novels and the tools we wish we had when we started. Demon At The Door is our first title, and the engine carrying it is being shaped, in parallel, into something other writers and artists can build their own stories on top of.</p>
+    <p>Two products, one workshop, one stubborn belief: that adult interactive fiction deserves the same craft, warmth, and care as any other medium.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <a href="#top" class="brand"><span class="fire">Fire</span><span class="dreamz">dreamz</span></a>
+    <div class="footer-contact">
+      <a href="mailto:dream@firedreamz.com">dream@firedreamz.com</a>
+    </div>
+    <div class="footer-meta">
+      &copy; 2026 Firedreamz. Demon At The Door is intended for adult audiences.
+    </div>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Screenshot viewer" aria-hidden="true">
+  <button class="lightbox-close" id="lightbox-close" aria-label="Close screenshot">&times;</button>
+  <img id="lightbox-img" src="" alt="" />
+</div>
+
+<script>
+(function() {
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightbox-img');
+  var lightboxClose = document.getElementById('lightbox-close');
+  var shots = document.querySelectorAll('.shot');
+
+  function openLightbox(src, alt) {
+    lightboxImg.src = src;
+    lightboxImg.alt = alt || '';
+    lightbox.classList.add('open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    lightboxImg.src = '';
+    document.body.style.overflow = '';
+  }
+
+  shots.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var src = btn.getAttribute('data-src');
+      var img = btn.querySelector('img');
+      openLightbox(src, img ? img.getAttribute('alt') : '');
+    });
+  });
+
+  lightbox.addEventListener('click', function(e) {
+    if (e.target === lightbox || e.target === lightboxImg) closeLightbox();
+  });
+  lightboxClose.addEventListener('click', closeLightbox);
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+  });
+})();
+</script>
+
+</body>
+</html>
