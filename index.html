@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Firedreamz, games for adults</title>
+<meta name="description" content="Firedreamz makes hand-drawn, story-first games for adults. Home of Demon at the Door. 18+ only." />
+<meta name="rating" content="adult" />
+<link rel="canonical" href="https://firedreamz.com/" />
+<meta property="og:site_name" content="Firedreamz" />
+<meta property="og:title" content="Firedreamz" />
+<meta property="og:description" content="Hand-drawn, story-first games for adults. 18+ only." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://firedreamz.com/" />
+<meta property="og:image" content="https://firedreamz.com/assets/img/og_image.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="theme-color" content="#fdfdff" />
+<meta name="color-scheme" content="light" />
+<link rel="icon" type="image/png" sizes="64x64" href="assets/img/favicon-64.png" />
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
+<link rel="preload" href="assets/fonts/spectral-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="assets/fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Firedreamz",
+  "url": "https://firedreamz.com/",
+  "logo": "https://firedreamz.com/assets/img/apple-touch-icon.png",
+  "email": "dream@firedreamz.com",
+  "sameAs": ["https://demonatthedoor.com/"]
+}
+</script>
+<style>
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("assets/fonts/montserrat-latin-ext-wght-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("assets/fonts/montserrat-latin-wght-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Spectral";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/spectral-latin-ext-400-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Spectral";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/spectral-latin-400-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Spectral";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/spectral-latin-ext-400-italic.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Spectral";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/spectral-latin-400-italic.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Colours are sampled from the logo: its paper, its ink, tree bark, flame, and the eyes. */
+:root {
+  --paper: #fdfdff;
+  --ink: #000815;
+  --bark: #543723;
+  --ember: #f35602;
+  --eye: #e61908;
+  --night: #000b15;
+  --rule: rgba(0, 8, 21, 0.16);
+  --caps: "Montserrat", "Avenir Next", "Century Gothic", sans-serif;
+  --text: "Spectral", "Iowan Old Style", Georgia, serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--text);
+  font-size: 19px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+ol { list-style: none; }
+
+.page {
+  max-width: 1120px;
+  min-height: 100vh;
+  min-height: 100svh;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 56px);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.caps {
+  font-family: var(--caps);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+/* ---------- top strip ---------- */
+.strip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 22px 0 20px;
+  border-bottom: 1px solid var(--rule);
+}
+.strip .age { display: inline-flex; align-items: center; gap: 10px; white-space: nowrap; }
+.strip .age i {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--eye);
+}
+
+/* ---------- main ---------- */
+main {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: clamp(36px, 7vw, 104px);
+  align-items: end;
+  padding: clamp(40px, 9vh, 104px) 0 clamp(48px, 9vh, 104px);
+}
+
+.logo { position: relative; max-width: 460px; }
+.logo img { width: 100%; }
+/* The eyes in the trees close now and then. Positions are percentages of the image. */
+.logo .lid {
+  position: absolute;
+  top: 44.7%;
+  width: 5.4%;
+  height: 3.9%;
+  border-radius: 50%;
+  background: var(--night);
+  box-shadow: 0 0 3px 2px var(--night);
+  opacity: 0;
+  animation: blink 11s infinite;
+}
+.logo .lid.l { left: 44%; }
+.logo .lid.r { left: 51%; }
+@keyframes blink {
+  0%, 37.4% { opacity: 0; }
+  38%, 39% { opacity: 1; }
+  39.6%, 81.4% { opacity: 0; }
+  82%, 82.8% { opacity: 1; }
+  83.4%, 84.6% { opacity: 0; }
+  85.2%, 86% { opacity: 1; }
+  86.6%, 100% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .logo .lid { animation: none; }
+}
+
+.side { padding-bottom: 3.4%; }
+.intro {
+  font-size: clamp(23px, 2.5vw, 30px);
+  line-height: 1.32;
+  max-width: 19em;
+  margin-bottom: clamp(40px, 7vh, 72px);
+}
+
+/* ---------- catalogue ---------- */
+.cat-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--ink);
+  color: var(--bark);
+}
+.cat-head h2 { font: inherit; letter-spacing: inherit; color: var(--ink); }
+
+.entry {
+  display: grid;
+  grid-template-columns: 3.2em 1fr;
+  column-gap: 8px;
+  padding: 24px 0 26px;
+  border-bottom: 1px solid var(--rule);
+  text-decoration: none;
+}
+.entry .no {
+  font-family: var(--caps);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: var(--bark);
+  padding-top: 0.95em;
+}
+.entry .title {
+  display: block;
+  font-size: clamp(31px, 3.7vw, 44px);
+  line-height: 1.1;
+  letter-spacing: -0.012em;
+  text-decoration: underline transparent;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.16em;
+  transition: text-decoration-color 0.18s;
+}
+.entry .blurb { display: block; margin-top: 12px; max-width: 26em; }
+.entry .meta { display: block; margin-top: 16px; color: var(--bark); letter-spacing: 0.22em; line-height: 2; }
+.entry .go {
+  display: inline-block;
+  margin-top: 18px;
+  font-family: var(--caps);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  border-bottom: 2px solid var(--ember);
+  padding-bottom: 3px;
+}
+.entry .go span { display: inline-block; transition: transform 0.18s; }
+.entry:hover .title, .entry:focus-visible .title { text-decoration-color: var(--ember); }
+.entry:hover .go span, .entry:focus-visible .go span { transform: translate(2px, -2px); }
+a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+
+/* ---------- footer ---------- */
+footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px 32px;
+  padding: 22px 0 30px;
+  border-top: 1px solid var(--rule);
+  font-size: 15.5px;
+  color: var(--bark);
+}
+footer nav { display: flex; flex-wrap: wrap; gap: 6px 24px; }
+footer a { text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 0.2em; }
+footer a:hover { color: var(--ink); text-decoration-color: var(--ember); }
+footer .note { flex-basis: 100%; font-style: italic; }
+
+@media (max-width: 820px) {
+  main { grid-template-columns: 1fr; gap: 36px; padding-top: 28px; }
+  .logo { width: min(100%, 360px); margin: 0 auto; }
+  .side { padding-bottom: 0; }
+}
+@media (max-width: 420px) {
+  body { font-size: 18px; }
+  .caps { letter-spacing: 0.24em; }
+  .entry { grid-template-columns: 2.6em 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="strip caps">
+    <span>Games for adults</span>
+    <span class="age"><i aria-hidden="true"></i>18+ only</span>
+  </div>
+
+  <main>
+    <h1 class="logo">
+      <img src="assets/img/logo-560.webp"
+           srcset="assets/img/logo-560.webp 560w, assets/img/logo-980.webp 980w"
+           sizes="(max-width: 820px) 360px, 460px"
+           width="980" height="1140"
+           alt="Firedreamz" />
+      <span class="lid l" aria-hidden="true"></span>
+      <span class="lid r" aria-hidden="true"></span>
+    </h1>
+
+    <div class="side">
+      <p class="intro">Hand-drawn, story-first games. Made for adults.</p>
+
+      <section aria-labelledby="catalogue">
+        <div class="cat-head caps">
+          <h2 id="catalogue">Catalogue</h2>
+          <span>1 title</span>
+        </div>
+        <ol>
+          <li>
+            <a class="entry" href="https://demonatthedoor.com/" target="_blank" rel="noopener">
+              <span class="no" aria-hidden="true">01</span>
+              <span>
+                <span class="title">Demon at the Door</span>
+                <span class="blurb">A mansion in the woods. A town full of secrets. And something waiting at the door.</span>
+                <span class="meta caps">Adult adventure &middot; Hand-drawn 2D &middot; Early access</span>
+                <span class="go">demonatthedoor.com <span aria-hidden="true">&#8599;&#xFE0E;</span></span>
+              </span>
+            </a>
+          </li>
+        </ol>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <span>&copy; <span id="year">2026</span> Firedreamz</span>
+    <nav aria-label="Footer">
+      <a href="mailto:dream@firedreamz.com">dream@firedreamz.com</a>
+      <a href="documents/datd_patreon_app_privacy-policy.txt">Privacy</a>
+      <a href="documents/datd_patreon_app_terms-of-service.txt">Terms</a>
+    </nav>
+    <p class="note">This site and everything it links to is meant for adults, 18 and over.</p>
+  </footer>
+
+</div>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

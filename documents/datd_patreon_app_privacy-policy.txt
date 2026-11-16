@@ -1,0 +1,190 @@
+PRIVACY POLICY
+Firedreamz
+Last updated: 16 November 2026
+
+1. WHO WE ARE
+
+Firedreamz is a sole proprietorship (eenmanszaak) registered in the
+Netherlands, based in Assen. We develop and sell the visual novel game
+"Demon at the Door" and related digital content.
+
+Contact:
+Firedreamz
+Assen, The Netherlands
+Email: dream@firedreamz.com
+KvK: 42105483
+
+2. WHAT DATA WE COLLECT
+
+We collect only the data needed to run our business:
+
+- Contact details (name, email address) when you email us or contact us
+  through a platform.
+- Order and payment information when you buy our game or support us
+  through a platform such as Steam, itch.io, or Patreon. Payments are
+  processed by those platforms. We receive the details needed to deliver
+  your purchase and meet our tax obligations.
+- Newsletter data (email address) if you subscribe to updates, and only
+  with your consent.
+- Website usage data if our website uses analytics. If it does, this
+  policy will name the analytics tool and what it collects.
+
+3. WHAT WE USE YOUR DATA FOR
+
+- Delivering purchases and rewards you are entitled to.
+- Answering your messages.
+- Sending newsletters or updates you signed up for. Every message
+  includes an unsubscribe link.
+- Meeting legal obligations, such as Dutch tax administration
+  (Belastingdienst), which requires us to keep sales records for 7 years.
+
+We do not sell your data. We do not share it with advertisers.
+
+4. PATRON PAGE AND PATRON EMAILS (DEMON AT THE DOOR)
+
+Patreon members of "Demon at the Door", on a paid tier or the free
+tier, get a patron page at patrons.demonatthedoor.com, where you log in
+with your Patreon account. To run it we receive from Patreon, and store:
+
+- Your Patreon member and user ID, name, email address, membership
+  status and tier.
+- Your Discord user ID, if you connected Discord in your Patreon
+  settings.
+
+This includes free members: we store this record when you join the free
+tier on Patreon, whether or not you visit the patron page.
+
+When you use the service we also store:
+
+- Which game builds you downloaded, for which platform, and when.
+- Your votes in polls.
+- The name you choose for the game's special thanks (higher tiers only).
+  It stays in the credits after your membership ends.
+- Your choice to receive or skip new-build emails.
+- Copies of the emails and Discord messages we sent you.
+- A login cookie (valid up to 30 days) that keeps you signed in. The
+  page sets no tracking or advertising cookies.
+
+We use this to deliver your tier's downloads, votes, Special Gallery
+codes and credits, and to email you when you join, change tier or leave,
+and when a new build is out (you can switch build emails off on the
+patron page). Free members get the patron page and can vote in polls
+that are open to them; we send free members no emails or Discord
+messages.
+
+Processors: the server provider that hosts the patron page, Brevo
+(Sendinblue SAS, France) which sends the emails, and Discord if you
+connected it. Nightly backups of the patron database are kept for 14
+days on the server and are also copied to the owner's computer.
+
+These records are kept after a membership ends, so a returning patron
+keeps their settings and credit name. Email us to have them deleted.
+Deletion covers the live data right away and backups as they roll over.
+
+5. PLAY STATISTICS IN THE GAME (DEMON AT THE DOOR)
+
+From the release after 0.1.2, "Demon at the Door" sends anonymous play
+statistics to our server while you play. The game explains this on a
+screen after the age check, the first time you start it, and you can
+switch it off at any time in Options > Privacy.
+
+What the game sends, about once a minute while statistics are on:
+
+- A random ID the game creates on your device. It is not linked to your
+  name, account, email or Patreon membership.
+- A random ID for each time you start the game.
+- The game version, platform (Windows, Linux, Android), the Linux
+  distribution name (to recognise the Steam Deck) and the game language.
+- Story progress: which story events you complete, the in-game day and
+  room, starting a new game, loading a save, and game overs.
+- Your hardware: graphics card name and vendor, video memory (rounded to
+  MB), processor name and number of threads, memory (rounded to whole
+  GB), main screen resolution and operating system version. We use it to
+  see what kind of computer most players have, so the game runs well on
+  them.
+
+What it does not send: your name, account, email or save files.
+
+Your IP address reaches our server with every message, as with any
+internet connection. We use it only to look up the country (with the
+DB-IP "IP to Country Lite" database, a file kept on our own server, so
+your address is not sent to anyone), to limit how many messages one
+address can send, and to leave out our own test devices. The address is
+then discarded: it is not stored with
+the statistics, and our server keeps no access log.
+
+We use the statistics to see how many people play, for how long, where
+they stop, and how to improve the game.
+
+If you switch statistics off, the game sends one last message that only
+says statistics were turned off, with the game version and platform and
+no ID. It then sends nothing, and the random ID is deleted from your
+device. Statistics already received stay, but they are not linked to
+you.
+
+Where it is kept: on the same server as the patron page, in a database
+separate from patron data, and in the nightly backups described in
+section 4. Only the owner of Firedreamz can view it.
+
+6. THIRD-PARTY PLATFORMS
+
+If you buy from us or support us through a third-party platform (Steam,
+itch.io, Patreon, or similar), that platform processes your data under
+its own privacy policy. We only receive the information the platform
+shares with sellers and creators.
+
+7. LEGAL BASIS (GDPR)
+
+We process personal data on these grounds:
+
+- Performance of a contract: delivering what you bought, including
+  patron rewards and membership emails.
+- Legal obligation: tax and accounting records.
+- Consent: newsletters and optional updates. You can withdraw consent
+  at any time.
+- Legitimate interest: anonymous play statistics in the game (section
+  5), to understand how the game is played and improve it. You can
+  object at any time by switching statistics off in the game.
+- Legitimate interest: the record of free Patreon members (section 4),
+  so they can use the patron page and vote in polls open to them. You
+  can ask us to delete it at any time.
+
+8. RETENTION
+
+- Tax and sales records: 7 years, as required by Dutch law.
+- Email correspondence: up to 2 years after our last contact.
+- Newsletter subscriptions: until you unsubscribe.
+- Patron page records: see section 4.
+- Play statistics: individual events (story progress, game overs) for
+  180 days. Totals per random ID (first and last seen, play time,
+  country, last story event reached, hardware) and opt-out counts are
+  kept.
+
+9. YOUR RIGHTS
+
+Under the GDPR you have the right to:
+
+- Access the personal data we hold about you.
+- Correct inaccurate data.
+- Request deletion of your data, where the law allows it.
+- Object to or restrict processing.
+- Data portability.
+- Lodge a complaint with the Dutch Data Protection Authority
+  (Autoriteit Persoonsgegevens, autoriteitpersoonsgegevens.nl).
+
+To exercise any of these rights, email us at dream@firedreamz.com. We respond
+within 30 days. Play statistics carry no name or contact detail, so we
+can only find yours if you send us the random ID from your game's
+privacy.cfg file (in the game's user data folder).
+
+10. SECURITY
+
+We store data on secured systems with access limited to the owner of
+Firedreamz. Accounts holding personal data use strong passwords
+and, where available, two-factor authentication.
+
+11. CHANGES
+
+If we change this policy, we update the date at the top. For significant
+changes we will announce the update on our website or through the
+platform where you follow us.
