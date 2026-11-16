@@ -17,7 +17,7 @@
 <meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="theme-color" content="#fdfdff" />
-<meta name="color-scheme" content="light" />
+<meta name="color-scheme" content="only light" />
 <link rel="icon" type="image/png" sizes="64x64" href="assets/img/favicon-64.png" />
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
 <link rel="preload" href="assets/fonts/spectral-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
@@ -85,6 +85,7 @@
 
 /* Colours are sampled from the logo: its paper, its ink, tree bark, flame, and the eyes. */
 :root {
+  color-scheme: only light; /* stops phone browsers from auto-darkening the page */
   --paper: #fdfdff;
   --ink: #000815;
   --bark: #543723;
