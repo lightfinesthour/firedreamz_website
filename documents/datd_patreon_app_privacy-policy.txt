@@ -1,6 +1,6 @@
 PRIVACY POLICY
 Firedreamz
-Last updated: 16 November 2026
+Last updated: 17 November 2026
 
 1. WHO WE ARE
 
@@ -126,14 +126,43 @@ Where it is kept: on the same server as the patron page, in a database
 separate from patron data, and in the nightly backups described in
 section 4. Only the owner of Firedreamz can view it.
 
-6. THIRD-PARTY PLATFORMS
+6. PUBLIC DOWNLOAD LINKS (DEMON AT THE DOOR)
+
+The free public version of "Demon at the Door" is downloaded through
+links that start with patrons.demonatthedoor.com/get/. Such a link
+counts the click and then sends you on to the file host that holds the
+download (Pixeldrain or Gofile). That host handles your download under
+its own privacy policy.
+
+For each counted click we store:
+
+- The time, the game version and the platform.
+- The country.
+- Where the link was clicked: a short tag in the link itself (for
+  example the name of a forum) or, without a tag, the site that
+  referred you.
+
+We store no IP address and no ID, and the link sets no cookie, so a
+click cannot be linked to you or to your play statistics.
+
+Your IP address is used as in section 5: to look up the country, to
+limit how many requests one address can make, to count a repeated click
+from the same address only once (remembered in the server's memory for
+about an hour, never written to disk), and to leave out our own
+devices. The address is then discarded.
+
+We use the counts to see how many people download the game and where
+they found it. They are kept in the same database as the play
+statistics, and only the owner of Firedreamz can view them.
+
+7. THIRD-PARTY PLATFORMS
 
 If you buy from us or support us through a third-party platform (Steam,
 itch.io, Patreon, or similar), that platform processes your data under
 its own privacy policy. We only receive the information the platform
 shares with sellers and creators.
 
-7. LEGAL BASIS (GDPR)
+8. LEGAL BASIS (GDPR)
 
 We process personal data on these grounds:
 
@@ -145,11 +174,14 @@ We process personal data on these grounds:
 - Legitimate interest: anonymous play statistics in the game (section
   5), to understand how the game is played and improve it. You can
   object at any time by switching statistics off in the game.
+- Legitimate interest: counting clicks on the public download links
+  (section 6), to see how many people download the game and where they
+  found it. The counts hold no personal data.
 - Legitimate interest: the record of free Patreon members (section 4),
   so they can use the patron page and vote in polls open to them. You
   can ask us to delete it at any time.
 
-8. RETENTION
+9. RETENTION
 
 - Tax and sales records: 7 years, as required by Dutch law.
 - Email correspondence: up to 2 years after our last contact.
@@ -159,8 +191,9 @@ We process personal data on these grounds:
   180 days. Totals per random ID (first and last seen, play time,
   country, last story event reached, hardware) and opt-out counts are
   kept.
+- Download link counts (section 6): kept. They hold no personal data.
 
-9. YOUR RIGHTS
+10. YOUR RIGHTS
 
 Under the GDPR you have the right to:
 
@@ -177,13 +210,13 @@ within 30 days. Play statistics carry no name or contact detail, so we
 can only find yours if you send us the random ID from your game's
 privacy.cfg file (in the game's user data folder).
 
-10. SECURITY
+11. SECURITY
 
 We store data on secured systems with access limited to the owner of
 Firedreamz. Accounts holding personal data use strong passwords
 and, where available, two-factor authentication.
 
-11. CHANGES
+12. CHANGES
 
 If we change this policy, we update the date at the top. For significant
 changes we will announce the update on our website or through the
